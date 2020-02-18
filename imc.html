@@ -14,60 +14,134 @@
 
         function obtenerIMCNominal(imc_numerico) {
             //entrada de la funcion;
-            let imc_nominal = "";
-            //Mostrar la imagen
-            let elemento_img = document.createElement("img");
-            let elemento_padre = document.getElementById("hook_imagen");
-            elemento_padre.appendChild(elemento_img);
-            console.log("Nº hijos 1: " + elemento_padre.childElementCount);
-            elemento_padre.removeChild(elemento_padre.firstChild);
-            console.log("Nº hijos 2: " + elemento_padre.childElementCount);
-            
+            let imc_nominal = "0";
             if (imc_numerico < 16) {
                 imc_nominal = "DESNUTRIDO";
-                elemento_img.src = "images/desnutrido.jpg";
             } else if ((imc_numerico >= 16) && (imc_numerico < 18)) {
                 imc_nominal = "DELGADO";
-                elemento_img.src = "images/delgado.jpg";
             } else if ((imc_numerico >= 18) && (imc_numerico < 25)) {
                 imc_nominal = "IDEAL";
-                elemento_img.src = "images/ideal.jpg";
             } else if ((imc_numerico >= 25) && (imc_numerico < 31)) {
                 imc_nominal = "SOBREPESO";
-                elemento_img.src = "images/sobrepeso.jpg";
-            } else  if (imc_numerico > 31){
+            } else if (imc_numerico > 31) {
                 imc_nominal = "OBESO";
-                elemento_img.src = "images/obeso.jpg";
             }
-            
             //salida de la funcion;
             return imc_nominal;
-            
+
         }
 
-        function calcularIMC() {
-            //Se puede cambiar var por let, este último es más aconsejable
-            console.log("Llamo a calcular el IMC");
-            var altura = document.getElementById("inAltura").value;
-            console.log("Altura obtenida " + altura);
-            var peso = document.getElementById("inPeso").value;
-            console.log("Peso obtenido " + peso);
-            var imc = peso / (altura * altura);
-            console.log("Su IMC es " + imc);
-            //document.getElementById("spIMC").innerHTML = imc;
+        //Función que devuelve el elemento img donde irá la foro del estado del IMC correspondiente.
+        // Si no existe
+        //Entradas, Salidas, Funcionalidad, Precondiciones y postcondiciones
+        function obtenerElementoImg(){
+            let elemento_img;
+
+               //OBTENER EL ELEMENTO PADRE Y VEMOS SI TIENE HIJOS
+               let padre = document.getElementById("hook_imagen");
+               if (padre.childElementCount==0) {
+                   console.log("No tengo hijos, lo creo");
+                   //Crearlo
+                   elemento_img = document.createElement("img");
+                   padre.appendChild(elemento_img);
+               }else{
+                   //Modificarlo
+                   console.log("ya tengo hijos, lo modifico");
+                   elemento_img = padre.firstChild;
+               }
+
+
+            return elemento_img;
+
+
+        }
+
+        function dibujarImagen(imc_nominal) {
+
+            //TODO OBTENER ELEMENTO IMAGEN
+            let elto_img = obtenerElementoImg();
+
+            switch (imc_nominal) {
+
+                case "DESNUTRIDO":
+                    //asignar atributo src a la imagen DESNUTRIDO
+                    elto_img.src = "images/desnutrido.jpg";
+                    break;
+                case "DELGADO":
+                    //asignar atributo src a la imagen DELGADO
+                    elto_img.src = "images/delgado.jpg";
+                    break;
+                case "IDEAL":
+                    //asignar atributo src a la imagen IDEAL
+                    elto_img.src = "images/ideal.jpg";
+                    break;
+                case "SOBREPESO":
+                    //asignar atributo src a la imagen SOBREPESO
+                    elto_img.src = "images/sobrepeso.jpg";
+                    break;
+                case "OBESO":
+                    //asignar atributo src a la imagen OBESO
+                    elto_img.src = "images/obeso.jpg";
+                    break;
+
+            }
+
+        }
+
+        function obtenerAltura(){
+            let altura = "0";
+            altura = document.getElementById("inAltura").value;
+            console.log("Altura: " + altura);
+
+            return altura;
+        }
+
+        function obtenerPeso(){
+            let peso = "0";
+            peso = document.getElementById("inPeso").value;
+            console.log("Peso: " + peso);
+            return peso;
+        }
+
+        function calcularIMCNumerico(altura, peso){
+            let imc_calculado;
+                imc_calculado = peso/(altura * altura);
+
+            return imc_calculado;
+
+        }
+
+        function mostrarResultado(imc){
+
             //Mostrar el resultado numérico
-            var resultado_imc = document.getElementById("spIMC");
-            resultado_imc.innerHTML = Math.round(imc);
+            let resultado_imc = document.getElementById("spIMC");
+            //Redondeo el resultado
+            let imc_rendondeado = Math.round(imc);
+            //Asigno el nuevo valor. Ojo con el redondeo
+            resultado_imc.innerHTML = imc_rendondeado;
             let imc_nominal = obtenerIMCNominal(imc);
             //Mostrar el resultado nominal
             console.log("Usted se encuentra en el grupo: " + imc_nominal);
             document.getElementById("spGrupo").innerHTML = imc_nominal;
-        }
+            //mostramos la imagen
+            dibujarImagen(imc_nominal);
 
+        }
+        
+        function calcularIMC() {
+
+            let altura = obtenerAltura();
+            let peso = obtenerPeso();
+            let imc = calcularIMCNumerico(altura, peso);
+            mostrarResultado(imc);
+            
+        }
+        
+        
         /*
         Función que calcula el valor nominal del IMC dado el valor numérico
         */
-        
+
 
 
 
@@ -96,7 +170,7 @@
 <body>
 
     <div class="contenedor">
-        <h2>Cálculo de IMC</h2>
+        <h2>CÁLCULO DE IMC</h2>
         <h3>(Índice de masa Corporal)</h3>
         <p class="dato">Introduce tu altura: <input type="text" name="" id="inAltura"></p>
         <p class="dato">Introduce tu peso: <input type="text" name="" id="inPeso"></p>
