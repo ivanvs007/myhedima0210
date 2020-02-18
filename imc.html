@@ -15,18 +15,31 @@
         function obtenerIMCNominal(imc_numerico) {
             //entrada de la funcion;
             let imc_nominal = "";
+            //Mostrar la imagen
+            let elemento_img = document.createElement("img");
+            let elemento_padre = document.getElementById("hook_imagen");
+            elemento_padre.appendChild(elemento_img);
+            console.log("Nº hijos 1: " + elemento_padre.childElementCount);
+            elemento_padre.removeChild(elemento_padre.firstChild);
+            console.log("Nº hijos 2: " + elemento_padre.childElementCount);
             
             if (imc_numerico < 16) {
                 imc_nominal = "DESNUTRIDO";
+                elemento_img.src = "images/desnutrido.jpg";
             } else if ((imc_numerico >= 16) && (imc_numerico < 18)) {
                 imc_nominal = "DELGADO";
+                elemento_img.src = "images/delgado.jpg";
             } else if ((imc_numerico >= 18) && (imc_numerico < 25)) {
                 imc_nominal = "IDEAL";
+                elemento_img.src = "images/ideal.jpg";
             } else if ((imc_numerico >= 25) && (imc_numerico < 31)) {
                 imc_nominal = "SOBREPESO";
-            } else {
+                elemento_img.src = "images/sobrepeso.jpg";
+            } else  if (imc_numerico > 31){
                 imc_nominal = "OBESO";
+                elemento_img.src = "images/obeso.jpg";
             }
+            
             //salida de la funcion;
             return imc_nominal;
             
@@ -92,6 +105,7 @@
         <p class="dato">Usted se encuentra en el grupo: <span id="spGrupo"></span></p>
 
     </div>
+    <div id="hook_imagen"></div>
 
 
 </body>
