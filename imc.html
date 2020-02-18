@@ -12,6 +12,12 @@
         //window.alert("Bienvenido");
         console.log("Estoy dentro");
 
+        const FOTO_DESNUTRIDO = "images/desnutrido.jpg";
+        const FOTO_DELGADO = "images/delgado.jpg";
+        const FOTO_IDEAL = "images/ideal.jpg";
+        const FOTO_SOBREPESO = "images/sobrepeso.jpg";
+        const FOTO_OBESO = "images/obeso.jpg";
+
         function obtenerIMCNominal(imc_numerico) {
             //entrada de la funcion;
             let imc_nominal = "0";
@@ -36,6 +42,7 @@
         //Entradas, Salidas, Funcionalidad, Precondiciones y postcondiciones
         function obtenerElementoImg(){
             let elemento_img;
+            let elemento_txt;
 
                //OBTENER EL ELEMENTO PADRE Y VEMOS SI TIENE HIJOS
                let padre = document.getElementById("hook_imagen");
@@ -43,11 +50,15 @@
                    console.log("No tengo hijos, lo creo");
                    //Crearlo
                    elemento_img = document.createElement("img");
+                   elemento_txt = document.createElement("h3");
                    padre.appendChild(elemento_img);
+                   elemento_img.appendChild(elemento_txt);
                }else{
                    //Modificarlo
                    console.log("ya tengo hijos, lo modifico");
                    elemento_img = padre.firstChild;
+                   elemento_txt = elemento_img.firstChild;
+                   
                }
 
 
@@ -60,28 +71,29 @@
 
             //TODO OBTENER ELEMENTO IMAGEN
             let elto_img = obtenerElementoImg();
+            let txt_img;
 
             switch (imc_nominal) {
 
                 case "DESNUTRIDO":
                     //asignar atributo src a la imagen DESNUTRIDO
-                    elto_img.src = "images/desnutrido.jpg";
+                    elto_img.src = FOTO_DESNUTRIDO;
                     break;
                 case "DELGADO":
                     //asignar atributo src a la imagen DELGADO
-                    elto_img.src = "images/delgado.jpg";
+                    elto_img.src = FOTO_DELGADO;
                     break;
                 case "IDEAL":
                     //asignar atributo src a la imagen IDEAL
-                    elto_img.src = "images/ideal.jpg";
+                    elto_img.src = FOTO_IDEAL;
                     break;
                 case "SOBREPESO":
                     //asignar atributo src a la imagen SOBREPESO
-                    elto_img.src = "images/sobrepeso.jpg";
+                    elto_img.src = FOTO_SOBREPESO;
                     break;
                 case "OBESO":
                     //asignar atributo src a la imagen OBESO
-                    elto_img.src = "images/obeso.jpg";
+                    elto_img.src = FOTO_OBESO;
                     break;
 
             }
@@ -106,6 +118,7 @@
         function calcularIMCNumerico(altura, peso){
             let imc_calculado;
                 imc_calculado = peso/(altura * altura);
+                console.log("IMC calculado: " + imc_calculado)
 
             return imc_calculado;
 
@@ -156,6 +169,9 @@
         Si es >=18 y <25 = Ideal
         Si es >=25 y <31 = Sobrepeso
         Si es >=31 = Obesidad
+
+        Candidatos a constantes
+        intervalos, valores nominales, imágenes.
 
         ALGORITMO
         ---------
