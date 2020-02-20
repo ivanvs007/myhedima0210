@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script>
+
+        let numero_aleatorio;//variable global
+        const VIDAS = 5;
+        let numero_intentos = 0;
+        let acertado = false;
+
+        window.onload = pedirNumero;
+
+        //Invoco a la variable global dentro de esta función
+        numero_aleatorio = Math.floor(Math.random() * (10 - 1)) + 1;
+        console.log("Número aleatorio= " + numero_aleatorio);
+
+        
+
+        function pedirNumero() {
+
+            do {
+                let numero_string = window.prompt("ADIVINA EL NÚMERO");
+                let numero_introducido = parseInt(numero_string); //CASTING
+                numero_intentos = numero_intentos + 1; //Número de intentos - numero_intentos++;
+
+                if (numero_introducido == numero_aleatorio) {
+                    console.log("¡ENHORABUENA!");
+                    acertado = true;
+                    alert("HAS ACERTADO. FINAL DEL JUEGO.");
+                    
+                } else if (numero_introducido < numero_aleatorio) {
+                    console.log("Es mayor");
+                    alert("¡PISTA, el número buscado es mayor!");
+                } else /*if (numero_introducido > numero_aleatorio)*/ {
+                    console.log("Es menor");
+                    alert("¡PISTA, el número buscado es menor!");
+                }
+
+            }
+            while ((numero_intentos < VIDAS) && (!acertado))
+            if(!acertado){
+                console.log("El juego ha finalizado");
+                alert("FINAL DEL JUEGO.Reinicia");
+                //Recargo la página de forzosamente
+                window.location.reload(true);
+            }
+
+
+        }
+
+
+
+
+
+
+
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
