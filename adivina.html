@@ -8,24 +8,37 @@
     <title>Adivina número</title>
     <style>
         .contenedor{
-            width: 50%;
+            width: 35%;
+            margin: auto;
+            margin-top: 50px;
+            text-align: center;
+            background-color: rgb(211, 209, 209);
+            padding: 20px;
+        }
+        h2{
+            text-transform: uppercase;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
     </style>
     <script>
         console.log("Estoy dentro");
 
 
-        window.onload = generarNumeroAleatorio;
+        window.onload = generarNumeroAleatorioyVidas;
 
         let numero_aleatorio;//variable global
-        const VIDAS = 5;
+        const VIDAS = 10;
         let numero_intentos = 0;
         let acertado = false;
+        let numero_vidas = VIDAS;
 
-        function generarNumeroAleatorio() {
+        
+
+        function generarNumeroAleatorioyVidas() {
             //Invoco a la variable global dentro de esta función
             numero_aleatorio = Math.floor(Math.random() * (10 - 1)) + 1;
             console.log("Número aleatorio= " + numero_aleatorio);
+            document.getElementById("dvVidas").innerHTML = VIDAS;
         }
 
         function informarAcierto() {
@@ -36,16 +49,20 @@
         function adivinarNumero() {
             console.log("Vamos a comprobar");
 
+            
 
             //Obtener el número
             let numero_introducido = document.getElementById("inNumero").value;
+            numero_intentos
 
 
             numero_intentos = numero_intentos + 1; //Número de intentos - numero_intentos++;
             console.log("Llevas " + numero_intentos + " intentos");
-
+            numero_vidas = numero_vidas -1;
             //Intentos
 
+            //Vamos a cambiar el div
+            document.getElementById("dvVidas").innerHTML = "Te quedan " + (numero_vidas) + " vidas";
 
             if (numero_introducido == numero_aleatorio) {
                 console.log("¡ENHORABUENA!");
@@ -57,9 +74,12 @@
             } else if (numero_introducido < numero_aleatorio) {
                 console.log("Es mayor");
                 alert("¡PISTA, el número buscado es mayor!");
+                document.getElementById("hIntentos").innerHTML= "TE QUEDAN " + numero_vidas + " INTENTOS";
+                
             } else /*if (numero_introducido > numero_aleatorio)*/ {
                 console.log("Es menor");
                 alert("¡PISTA, el número buscado es menor!");
+                document.getElementById("hIntentos").innerHTML= "TE QUEDAN " + numero_vidas + " INTENTOS";
             }
             //Si has alcanzado el límite de intentos y no has acertado
             //&&-Y lógico; ||-o
@@ -67,58 +87,26 @@
             if ((numero_intentos == VIDAS) && (!acertado)) {
                 console.log("El juego ha finalizado");
                 alert("FINAL DEL JUEGO.Reinicia");
+                
                 //Recargo la página de forzosamente
                 window.location.reload(true);
             }
         }
 
 
-        /*
-        function generarNumeroAleatorio(min, max) {
-            let numero_aleatorio =  Math.floor(Math.random() * (100 - 1)) + 1;
-            console.log(numero_aleatorio);
-        }
-
-        function adivinarNumero(min, max) {
-            let aleatorio = generarNumeroAleatorio(min, max);
-            let intentos = 0;
-            let numero_introducido = document.getElementById("inNumero").value;
-            console.log("El número introducido es: " + numero_introducido);
-            console.log("Número aleatorio: " + aleatorio);
-
-            if (numero_introducido < aleatorio) {
-                    alert("El número es mayor.");
-
-                } else if (numero_introducido > aleatorio) {
-                    alert("El número es menor");
-
-                } else if (numero_introducido == aleatorio) {
-                    alert("¡Enhorabuena!");
-
-
-                }
-
-            do {
-                intentos += 1;
-                console.log("Intentos: " + intentos);
-             } while (intentos < 5)
-
-
-
-        }
-
-*/
-
     </script>
 </head>
 
 <body>
     <div class="contenedor">
-        <h2>Adivina un número aleatorio del 1 al 10</h1>
+        <h2>Adivina un número aleatorio <br> del 1 al 10</h1>
         <label for="">Adivina el número:</label>
         <input type="text" name="" id="inNumero"><br>
+        <h4 id="hIntentos">TIENES 5 INTENTOS</h4>
         <input type="button" onclick="adivinarNumero(min, max)" value="COMPROBAR">
     </div>
+
+    <div id="dvVidas">5</div>
 </body>
 
 </html>

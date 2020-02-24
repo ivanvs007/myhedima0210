@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style3.css">
+    <script>
+        //Creo una constante de las últimas letras del DNI
+        const SECUENCIA_LETRAS_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
+        
+        //Creo una función para darle un valor numérico a la primera letra del DNI para extranjeros
+        function cambiar_valor(){
+            let primera_letra = document.getElementById("slCambiarLetra").value;
+
+            /*
+                let numero = document.getElementById("inDNINumber").value;
+                let numero_completo = primera_letra + numero;
+            */
+
+            if(primera_letra==""){
+                console.log("Sin valor inicial");
+
+                
+            }else if(primera_letra==0){
+                console.log("Has seleccionado la X");
+                
+            }else if(primera_letra==1){
+                console.log("Has seleccionado la Y");
+                
+            }else if(primera_letra==2){
+                console.log("Has seleccionado la Z");
+                
+            }
+
+
+
+            return primera_letra;
+        }
+
+        //Creo la función para localizar el valor de la última letra del DNI y en ella también le añado el valor de la primera letra en el caso de que el individuo sea extranjero.
+        function averiguar_letra(){
+            //Recojo el valor de la primera letra de la función externa.
+            let valor_primera_letra = cambiar_valor();
+            console.log("El valor es: " + cambiar_valor());
+
+            //Recojo el valor número introducido
+            let numero = document.getElementById("inDNINumber").value;
+            console.log("Número introducido: " + numero);
+            //let numero_ok = parseInt(numero);
+            
+            //Concateno el valor de la letro y el valor del número
+            let numero_completo = valor_primera_letra + numero;
+            console.log("Valor letra + número: " + numero_completo);
+
+            
+            //Divido el número obtenido entre la constante de letras a asignar              
+            let resto = numero_completo%SECUENCIA_LETRAS_DNI.length;
+            console.log("El resto es: " + resto);
+
+            //Localizo la posición de la letra sabiendo el resto obtenido y lo pinto.
+            let letra_elegida = SECUENCIA_LETRAS_DNI.charAt(resto);
+            console.log("La letra final es: " + letra_elegida);
+            document.getElementById("spLetra").innerHTML= letra_elegida;
+
+            //Dependiendo del valor de la primera letra, si la tiene, le vuelvo a asignar una letra al principio del DNI. Pinto el valor alfanumérico obtenido.
+            if(valor_primera_letra==""){
+                console.log("DNI Nacional")
+                document.getElementById("spDNI").innerHTML= numero + " " + letra_elegida;
+
+                
+            }else if(valor_primera_letra==0){
+                console.log("DNI Extranjero X")
+                document.getElementById("spDNI").innerHTML= "X " + numero + " " + letra_elegida;
+                
+            }else if(valor_primera_letra==1){
+                console.log("DNI Extranjero Y")
+                document.getElementById("spDNI").innerHTML= "Y " + numero + " " + letra_elegida;
+                
+            }else if(valor_primera_letra==2){
+                console.log("DNI Extranjero Z")
+                document.getElementById("spDNI").innerHTML= "Z " + numero + " " + letra_elegida;
+                
+            }
+            
+
+            
+
+            
+            
+            
+
+            
+        } 
+
+    </script>
+</head>
+
+<body>
+
+    <div class="dvcontenedor">
+        <div class="dvTitle">
+            <h1>AVERIGUA TU LETRA DEL DNI</h1>
+        </div>
+        <div class="col-4">
+            <img src="images/myAvatar.svg" alt="">
+        </div>
+
+        <div class="col-8">
+
+            <div class="dvdatos">
+                <label for="">Introduce la letra de tu DNI</label>
+                <select name="" id="slCambiarLetra" onchange="cambiar_valor()">
+                    <option value="">---</option>
+                    <option value="0">X</option>
+                    <option value="1">Y</option>
+                    <option value="2">Z</option>
+                </select>
+            </div>
+            <div class="dvdatos">
+                <label for="">Introduce el número de tu DNI</label>
+                <input type="text" name="" id="inDNINumber" maxlength="9">
+            </div>
+
+
+            <div class="dvbtn"><input class="inbtn" type="button" onclick="averiguar_letra()" value="CALCULAR"></div>
+            <div class="dvrespuesta">
+                <h3>La letra de tu DNI es: <span id="spLetra" style="color:blue;"></span></h3>
+                <h3>Tu DNI es: <span id="spDNI" style="color:blue;"></span></h3>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

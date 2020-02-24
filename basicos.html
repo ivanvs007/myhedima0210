@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BÁSICOS</title>
+
+    <script>
+        window.onload = basicos;
+
+
+        //1) HACER UN MÉTODO QUE RECIBA UNA CADENA Y UN CARÁCTER Y DIGA SI ESE CARÁCTER PERTENECE A LA CADENA O NO
+
+
+
+
+        function ejercicio1(palabra, letra) {
+
+
+            let acierto = false;
+            let posicion = "0";
+            let letra_encontrada = '';
+
+            do {
+
+                letra_encontrada = palabra.charAt(posicion);
+
+                if (letra_encontrada == letra) {
+                    acierto = true;
+                    console.log("Acierto");
+
+                } else {
+                    posicion = posicion + 1;
+                }
+
+
+            } while ((!acierto) && (posicion < palabra.length));
+
+            return acierto;
+        }
+
+        function ejercicio1v2(palabra, letra) {
+
+            var pertenece = false;
+
+            var acierto= palabra.indexOf(letra);
+            if(acierto!=-1){
+                pertenece =true;
+                console.log("Has acertado contiene la " + letra);
+            }
+            
+            //pertenece = palabra.indexOf(letra) != -1;
+
+            return pertenece;
+
+        }
+
+        function ejercicio2(palabra, letra) {
+
+
+
+            let repeticion = 0;
+
+            for (let i = 0; i < palabra.length; i++) {
+                //console.log(palabra.charAt(i));
+
+                if (palabra.charAt(i) == letra) {
+
+                    repeticion++;
+
+                }
+
+            }
+            console.log("Se repite " + repeticion + " veces");
+            return repeticion;
+        }
+
+
+
+        //7) HACER UN PROGRAMA QUE MUESTRE LA SECUENCIA 3, 6, 9, 12, 15 ...99
+
+
+        function ejercicio3(number) {
+            var resultado;
+            if (number % 2 == 0) {
+                resultado = number + " es un número par";
+            } else {
+                resultado = number + " es un número impar";
+            }
+            return resultado;
+        }
+
+        function ejercicio4() {
+
+            var respuesta = window.prompt("Ingrese su edad");
+
+            var edad = parseInt(respuesta);
+
+            if (edad < 18) {
+                console.log("Tienes " + edad + " años. Eres menor de edad");
+            } else {
+                console.log("Tienes " + edad + " años. Eres mayor de edad");
+
+            }
+            return edad;
+
+        }
+
+
+        function ejercicio5(nota) {
+
+            var calificacion;
+
+            if (nota < 5) {
+                clasificacion = "Has obtenido un " + nota + ". Estas Suspenso.";
+            } else if ((nota >= 5) && (nota < 6)) {
+                clasificacion = "Has obtenido un " + nota + ". Tienes un Aprobado.";
+            } else if ((nota >= 6) && (nota < 7)) {
+                clasificacion = "Has obtenido un " + nota + ". Tienes un Bien.";
+            } else if ((nota >= 7) && (nota <= 8.5)) {
+                clasificacion = "Has obtenido un " + nota + ". Tienes un Notable.";
+            } else if ((nota > 8.5) && (nota <= 10)) {
+                clasificacion = "Has obtenido un " + nota + ". Tienes un Sobresaliente.";
+            } else {
+                clasificacion = "Has obtenido un " + nota + ". Nota errónea."
+            }
+            return clasificacion;
+        }
+
+        function ejercicio6(){
+            
+            
+        }
+
+
+        function ejercicio7() {
+
+            /*   
+            for (let index = 3; index <= 99; index +=3) {
+                console.log(index);
+                
+            }   
+            */
+
+            let i = 0;
+            let resultado = "";
+
+            while (i < 99) {
+
+                i += 3;
+                resultado = resultado + i + ",";
+
+
+            }
+
+            console.log(resultado);
+            console.log("Longitud es: " + resultado.length);
+            var letra_ultima = resultado.charAt(resultado.length - 1);
+            console.log(letra_ultima);
+
+
+
+            /*
+            let i= 0;
+            let resultado ="";
+            
+            do {
+            
+                i+=3;
+                resultado = resultado + i + ",";
+                console.log(i);
+                console.log("Resultado es: " + resultado.length);
+            
+                
+            } while (i<99);
+            */
+
+        }
+
+
+
+
+        function basicos() {
+            console.log("Ejercicio 1");
+            var pertenece = ejercicio1("emes", "m");
+            console.log(pertenece);
+            console.log("Ejercicio 1v2");
+            var acertado = ejercicio1v2("emes", "m");
+            console.log(acertado);
+            var contador = ejercicio2("ele", "e");
+            console.log("Número de veces:" + contador);
+            console.log("Ejercicio 3");
+            var resultado = ejercicio3(50);
+            console.log(resultado);
+            console.log("Ejercicio 4");
+            ejercicio4();
+            console.log("Ejercicio5");
+            var nota = ejercicio5(7);
+            console.log(nota);
+            console.log("Ejercicio6");
+            //ejercicio6();
+            console.log("Ejercicio7");
+            ejercicio7();
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
