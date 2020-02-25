@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style4.css">
+    <script>
+
+        window.onload = iniciar_tablero;
+
+        let primera_vez = true;
+        let n_intentos = 0;
+        let td_tocado;
+        let n_aciertos = 0;
+        let parejas;
+        // let carta1;
+
+        function reiniciar() {
+            window.location.reload(true);
+        }
+
+        function ocultar_imagen() {
+            //Ocultar las imágenes
+            let array_imagenes = document.getElementsByTagName("img");
+            console.log(array_imagenes.length);
+            parejas = array_imagenes.length / 2;
+
+            let imagen_actual; //Variable auxiliar;
+
+            for (let i = 0; i < array_imagenes.length; i++) {
+                imagen_actual = array_imagenes[i];
+                console.log("La ruta es: " + imagen_actual.src);
+                imagen_actual.style.visibility = "hidden";
+
+            }
+
+        }
+
+        function programar_tds() {
+            //Programar el  de los tds
+            let array_tds = document.getElementsByTagName("td");
+
+            let td_actual; //Variable auxiliar;
+
+            for (let i = 0; i < array_tds.length; i++) {
+                td_actual = array_tds[i];
+                td_actual.onclick = descubrir;
+            }
+        }
+
+        function iniciar_tablero() {
+
+            ocultar_imagen();
+            programar_tds();
+        }
+
+        function tapar(imagen1, imagen2) {
+            imagen1.style.visibility = "hidden";
+            imagen2.style.visibility = "hidden";
+        }
+
+        function descubrir() {
+
+
+            /*console.log("elemento tocado: " + this);//"this" es el elemento que dispara el evento.
+            console.log("La imagen tocada es: " + this.firstChild.src);
+            this.firstChild.style.visibility = "visible";*/
+
+            this.firstChild.style.visibility = "visible";
+
+
+            if (primera_vez) {
+                primera_vez = false;
+                console.log("Primera vez");
+                td_tocado = this;
+                console.log(td_tocado);
+
+
+            } else if (this != td_tocado) {
+                primera_vez = true;
+                console.log("Segunda vez");
+                if (this.firstChild.src == td_tocado.firstChild.src) {
+                    console.log("ACIERTO");
+                    n_aciertos = n_aciertos + 1;
+
+
+                    if (n_aciertos == parejas) {
+                        setTimeout(reiniciar, 1000);
+                        //window.location.reload(true);
+
+                    }
+
+
+                } else {
+                    setTimeout(tapar, 1000, this.firstChild, td_tocado.firstChild);
+                    console.log("Son distintos");
+                    //this.firstChild.style.visibility = "hidden";
+                    //td_tocado.firstChild.style.visibility = "hidden";
+
+                }
+
+            }else{
+                console.log("Es el mismo elemento");
+            }
+
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <h1 class="dvCabecera">JUEGO EMPAREJADOS</h1>
+
+    <h1 class="dvCabecera" id="tirada">Número de tirada: </h1>
+
+    <table class="tbTablero">
+        <tr>
+            <td><img class="carta" src="images/carta1.svg" alt="" onclick="descubrir()"></td>
+            <td><img class="carta" src="images/carta2.svg" alt="" onclick="descubrir()"></td>
+        </tr>
+
+        <tr>
+            <td><img class="carta" src="images/carta2.svg" alt="" onclick="descubrir()"></td>
+            <td><img class="carta" src="images/carta1.svg" alt="" onclick="descubrir()"></td>
+        </tr>
+
+
+    </table>
+
+</body>
+
+</html>

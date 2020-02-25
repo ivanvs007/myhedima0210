@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img{
+    width: 100%;
+}
+
+body{
+    background-color:rgb(1, 83, 1);
+}
+
+.dvCabecera{
+    margin: 30px;
+    text-align: center;
+    color: white;
+}
+
+.tbTablero{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+td{
+    border: 2px solid white;
+    cursor: pointer;
+
+}
+
+td:hover{
+    background-color: yellow;
+}
+
+.carta{
+    width: 200px;
+}
