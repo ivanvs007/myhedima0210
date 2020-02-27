@@ -13,7 +13,17 @@
         const MAX_CASILLAS = 9;
         //numero par "numero % 2 == 0"
         let numeros_carton = [];//Array vacío de números
-        
+
+
+        function ordenarNumeros(a, b) {
+            var numero_ordenado;
+
+            numero_ordenado = a-b;
+            
+            return numero_ordenado;
+        }
+
+
 
 
         window.onload = dibujarCarton;
@@ -60,7 +70,9 @@
                 tabla.appendChild(fila);
             }
             rellenarCarton();
-            //esDeLuisa(numeros_carton);
+            var losNumerosAusentes = numerosQueNoEstan(numeros_carton);
+            console.log(losNumerosAusentes);
+            esDeLuisa(numeros_carton);
 
         }
 
@@ -92,6 +104,26 @@
             
         }*/
 
+        /*Hacer una funcion que devuelva un array con los números que no estén en el cartón*/
+
+        function numerosQueNoEstan(numeros_carton) {
+
+            let numeros_ausentes = [];
+
+            for (let index = 1; index <= 90; index++) {
+                //console.log(index);
+                if (numeros_carton.indexOf(index) == -1) {
+                    //console.log("No está");
+                    numeros_ausentes.push(index);
+                }
+
+            }
+            //console.log("Los números ausentes son:" + numeros_ausentes);
+            return numeros_ausentes;
+
+
+        }
+
         function esDeLuisa(numeros_carton) {
             let npares = 0;
             let nimpares = 0;
@@ -110,7 +142,7 @@
                     }
 
                 }
-                
+
                 if (npares < nimpares) {
                     //alert("Es de Luisa");
                     document.getElementById("acepto").innerHTML = "Es del gusto de Luisa";
@@ -123,13 +155,13 @@
             } else {
                 console.log("No tiene 5 y tiene 33");
                 document.getElementById("acepto").innerHTML = "No es del gusto de Luisa";
-                window.location.reload(true);
+                //window.location.reload(true);
             }
             //MUESTRO QUE SÍ ES DE LUISA
             //SI NO, 
             //MUESTRO QUE NO ES DE LUISA
-            console.log("Nº Pares: " + npares + "Nº Impares: " + nimpares);
-            
+            console.log("Nº Pares: " + npares + " Nº Impares: " + nimpares);
+
         }
 
 
@@ -140,9 +172,9 @@
 <body>
     <h1>BINGO LA GAVIA</h1>
     <div class="contenedor">
-        
+
         <table id="carton" class="tbTabla"></table>
-        <input id="idComprobar" onclick="esDeLuisa(numeros_carton)" type="button" value="COMPROBAR">
+        <!--<input id="idComprobar" onclick="esDeLuisa(numeros_carton)" type="button" value="COMPROBAR">-->
 
         <h2 id="acepto"></h2>
 
