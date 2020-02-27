@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YO BINGO punto ES</title>
+    <link rel="stylesheet" href="css/style5.css">
+
+    <script>
+        //TODO dibujar cartón
+        const MAX_FILAS = 3;
+        const MAX_CASILLAS = 9;
+        //numero par "numero % 2 == 0"
+        let numeros_carton = [];//Array vacío de números
+        
+
+
+        window.onload = dibujarCarton;
+
+        function generarNumAleatorio() {
+            let numero_aleatorio;
+            numero_aleatorio = Math.floor(Math.random() * (90)) + 1;
+
+
+            return numero_aleatorio;
+        }
+        function rellenarCarton() {
+            //TODO rellenar los tds con números aleatorios [1,90]
+            //obtener los tds
+            let array_tds = document.getElementsByTagName("td");
+            let numero_aleatorio;
+            var index = 0;
+
+            do {
+                numero_aleatorio = generarNumAleatorio();
+                if (numeros_carton.indexOf(numero_aleatorio) == -1) {
+                    console.log("Número no repetido");
+                    array_tds[index].innerHTML = numero_aleatorio;
+                    numeros_carton.push(numero_aleatorio);
+                    index++;
+                }
+
+            } while (numeros_carton.length < array_tds.length);
+
+            console.log("Números cartón =" + numeros_carton)
+
+
+        }
+        function dibujarCarton() {
+            let tabla = document.getElementById("carton");
+            let fila;
+            let columna;
+            for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
+                fila = document.createElement("tr");
+                for (let ncolumnas = 0; ncolumnas < MAX_CASILLAS; ncolumnas++) {
+                    columna = document.createElement("td");
+                    fila.appendChild(columna);
+                }
+                tabla.appendChild(fila);
+            }
+            rellenarCarton();
+            //esDeLuisa(numeros_carton);
+
+        }
+
+        /*
+            Los cartones que le gustan a Luisa tienen que cumplir tres condiciones: Que tenga el número 5, que tenga el 33, y que tengan más impares que pares. Se pide hacer una función que dado un cartón, sea capaz de reconocer si es o no del gusto de Luisa, mostrando el mensaje correspondiente en la página.
+        
+        */
+        /*
+        function mayoriaImpares(numeros_carton) {
+
+            let masImpares = false;
+            let nPar = 0;
+            let nImpar =0;
+
+            for (let index = 0; index < numeros_carton.length; index++) {
+                if(numeros_carton[index % 2==0]){
+                    nPar ++;
+
+                }else{
+                    nImpar ++;
+                }
+                
+            }
+            if(nPar<nImpar){
+                masImpares = true;
+            };//else{ masImpares = false};
+            //nImpar = (nImpar>nPar);
+            return masImpares;
+            
+        }*/
+
+        function esDeLuisa(numeros_carton) {
+            let npares = 0;
+            let nimpares = 0;
+            //SI NUMEROS CARTON TIENE 5 TIENE EL 33 Y HAY MÁS IMPARES
+            //if ((numeros_carton.include(5)) && (numeros_carton.include(33)) && mayoriaImpares(numeros_carton))
+            if ((numeros_carton.indexOf(5) != -1) && (numeros_carton.indexOf(33) != -1)) {
+                console.log("Tiene 5 y tiene 33");
+                for (let index = 0; index < numeros_carton.length; index++) {
+                    numeros_carton[index];
+                    if (numeros_carton[index] % 2 == 0) {
+                        npares++;
+
+                    } else {
+                        nimpares++;
+
+                    }
+
+                }
+                
+                if (npares < nimpares) {
+                    //alert("Es de Luisa");
+                    document.getElementById("acepto").innerHTML = "Es del gusto de Luisa";
+                }
+                else {
+                    //alert("No es de Luisa");
+                    document.getElementById("acepto").innerHTML = "No es del gusto de Luisa";
+                }
+
+            } else {
+                console.log("No tiene 5 y tiene 33");
+                document.getElementById("acepto").innerHTML = "No es del gusto de Luisa";
+                window.location.reload(true);
+            }
+            //MUESTRO QUE SÍ ES DE LUISA
+            //SI NO, 
+            //MUESTRO QUE NO ES DE LUISA
+            console.log("Nº Pares: " + npares + "Nº Impares: " + nimpares);
+            
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <h1>BINGO LA GAVIA</h1>
+    <div class="contenedor">
+        
+        <table id="carton" class="tbTabla"></table>
+        <input id="idComprobar" onclick="esDeLuisa(numeros_carton)" type="button" value="COMPROBAR">
+
+        <h2 id="acepto"></h2>
+
+
+    </div>
+
+</body>
+
+</html>

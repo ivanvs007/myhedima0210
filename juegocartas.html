@@ -12,7 +12,7 @@
         window.onload = iniciar_tablero;
 
         let primera_vez = true;
-        let n_intentos = 0;
+        //let n_intentos = 0;
         let td_tocado;
         let n_aciertos = 0;
         let parejas;
@@ -102,7 +102,7 @@
 
                 }
 
-            }else{
+            } else {
                 console.log("Es el mismo elemento");
             }
 
@@ -124,11 +124,13 @@
         <tr>
             <td><img class="carta" src="images/carta1.svg" alt="" onclick="descubrir()"></td>
             <td><img class="carta" src="images/carta2.svg" alt="" onclick="descubrir()"></td>
+            <td><img class="carta" src="images/carta2.svg" alt="" onclick="descubrir()"></td>
         </tr>
 
         <tr>
             <td><img class="carta" src="images/carta2.svg" alt="" onclick="descubrir()"></td>
             <td><img class="carta" src="images/carta1.svg" alt="" onclick="descubrir()"></td>
+            <td><img class="carta" src="images/carta2.svg" alt="" onclick="descubrir()"></td>
         </tr>
 
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style5.css">
+    <script>
+        const MAX_FILAS = 3;
+        const MAX_CASILLAS = 9;
+
+        window.onload = dibujar_carton;
+        //Dibujar el cartón
+
+        function generarNumAleatorio() {
+
+            
+
+            let numero_aleatorio = Math.floor(Math.random() * (90)) + 1;
+            return numero_aleatorio;
+            console.log(numero);
+
+        }
+
+        function rellenar_carton() {
+            //TODO rellenar los tds con numeros aleatorios [1,90];
+
+            let arrays_tds = document.getElementsByTagName("td");
+            let numero_aleatorio;
+
+            for (let index = 0; index < arrays_tds.length; index++) {
+
+                numero_aleatorio = generarNumAleatorio();
+                arrays_tds[index].innerHTML = numero_aleatorio;
+
+            }
+
+        }
+
+        function dibujar_carton() {
+            console.log("estoy dentro");
+
+            let fila;
+            let columna;
+            let tabla = document.getElementById("tbTabla");
+
+            //Creo un bucle en el que pintar las filas
+            for (let n_filas = 0; n_filas < MAX_FILAS; n_filas++) {
+                fila = document.createElement("tr");
+                fila.setAttribute("id", "trBingo_" + [n_filas]);
+                for (let n_columnas = 0; n_columnas < MAX_CASILLAS; n_columnas++) {
+                    columna = document.createElement("td");
+                    columna.setAttribute("id", "tdBingo_" + [n_columnas]);
+                    fila.appendChild(columna);
+                    //columna.innerHTML = 1;
+                    //columna.innerHTML = rellenar_carton();
+                }
+                tabla.appendChild(fila);
+                fila = fila + 1;
+                console.log(fila);
+            }
+
+
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+
+
+    <div class="contenedor">
+        <h1>BINGO LA GAVIA</h1>
+
+        <table id="tbTabla">
+
+        </table>
+    </div>
+
+</body>
+
+</html>

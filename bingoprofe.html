@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YO BINGO punto ES</title>
+    <style>
+        td {
+            vertical-align: top;
+            border: 2px solid #388ce0;
+            width: 3em;
+            height: 3em;
+        }
+    </style>
+    <script>
+        //TODO dibujar cartón
+        const MAX_FILAS = 3;
+        const MAX_COLUMNAS = 9;
+        var numeros_carton = [];//array vacío de números
+        window.onload = dibujarCarton;
+
+        function generarNumAleatorio()
+        {
+            let numero_aleatorio;
+
+                numero_aleatorio = Math.floor(Math.random() * (90)) + 1;
+
+            return numero_aleatorio;
+        }
+
+        function esDeLuisa(numeros_carton) {
+            let npares =0;
+            let nimpares =0;
+            //SI NUMEROS CARTON TIENE 5 TIENE EL 33 Y HAY MÁS IMPARES
+            if((numeros_carton.indexOf(5)!=-1) && (numeros_carton.indexOf(33)!=-1))
+            {
+                console.log("Tiene 5 y tiene 33");
+                for (let index = 0; index < numeros_carton.length; index++) {
+                  numeros_carton[index];
+                  if(numeros_carton[index] % 2 == 0)
+                  {
+                      npares ++;
+                  } else{
+                      nimpares ++;
+                  }
+                   
+                }
+                if(npares<nimpares){
+                    alert("Es de Luisa");
+                }
+                else{
+                    alert("No es de Luisa");
+                }
+
+            } else{
+                console.log("No tiene 5 y tiene 33");
+                alert("no es de Luisa");
+            }
+                //MUESTRO QUE SÍ ES DE LUISA
+            //SI NO, 
+                //MUESTRO QUE NO ES DE LUISA
+            
+        }
+        function rellenarCarton()
+        {
+            //TODO rellenar los tds con números aleatorios [1,90]
+            //obtener los tds
+            let array_tds = document.getElementsByTagName("td");
+            let numero_aleatorio;
+            
+            var index=0;
+            do{
+                numero_aleatorio = generarNumAleatorio();
+                //comprobar que numero_aleatorio NO esté en numeros_carton
+                if (numeros_carton.indexOf(numero_aleatorio)==-1)
+                {
+                    console.log ("numero VÁLIDO");
+                    array_tds[index].innerHTML = numero_aleatorio;
+                    numeros_carton.push(numero_aleatorio);
+                    index++;
+                }
+                
+            }while (numeros_carton.length<array_tds.length);
+            console.log ("Numeros cartón = " +numeros_carton);
+            esDeLuisa(numeros_carton);
+
+        }
+        function dibujarCarton()
+        {
+            let tabla = document.getElementById("carton");
+            let fila;
+            let columna;
+            for (let nfilas=0; nfilas<MAX_FILAS; nfilas++)
+            {
+                fila = document.createElement("tr");
+                for (let ncolumnas=0; ncolumnas<MAX_COLUMNAS; ncolumnas++)
+                {   
+                    columna = document.createElement("td");
+                    fila.appendChild(columna);
+                }
+                tabla.appendChild(fila);
+            }
+            rellenarCarton();
+        }
+    </script>
+</head>
+<body>
+    <table id="carton"></table>
+</body>
+</html>
