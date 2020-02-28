@@ -11,56 +11,58 @@
         //TODO dibujar cartón
         const MAX_FILAS = 3;
         const MAX_COLUMNAS = 9;
-        var numeros_carton = [];//array vacío de números
-        window.onload = dibujarCarton;
+        let numeros_carton = [];//array vacío de números
+        var saca = []; //Todas las bolas
+        let pos_saca =0; //La bola por la que voy
 
-        function generarNumAleatorio()
-        {
+
+        window.onload = crearCarton;
+
+
+
+        function generarNumAleatorio() {
             let numero_aleatorio;
 
-                numero_aleatorio = Math.floor(Math.random() * (90)) + 1;
+            numero_aleatorio = Math.floor(Math.random() * (90)) + 1;
 
             return numero_aleatorio;
         }
-        function mayoriaImpares(numeros_carton)
-        {
+        function mayoriaImpares(numeros_carton) {
             let mas_impares = false;
             let total_pares = 0;
             let total_impares = 0;
 
-                for (let index = 0; index < numeros_carton.length; index++) {
-                    if (numeros_carton[index]%2==0)
-                    {//el numero es par
-                        total_pares++;
-                    } else { //es impar
-                        total_impares++;
-                    }
+            for (let index = 0; index < numeros_carton.length; index++) {
+                if (numeros_carton[index] % 2 == 0) {//el numero es par
+                    total_pares++;
+                } else { //es impar
+                    total_impares++;
                 }
-                console.log("PARES " + total_pares + " IMPARES " + total_impares);
-                if (total_impares>total_pares){
-                    mas_impares = true;
-                }//else mas_impares = false
-                //mas_impares = (total_impares>total_pares);
+            }
+            console.log("PARES " + total_pares + " IMPARES " + total_impares);
+            if (total_impares > total_pares) {
+                mas_impares = true;
+            }//else mas_impares = false
+            //mas_impares = (total_impares>total_pares);
 
             return mas_impares;
         }
         //función que informa por pantalla
         //si el cartón rx es del gusto de Luisa
-        function comprobarCartonLuisa (numeros_carton)
-        {
+
+        function comprobarCartonLuisa(numeros_carton) {
             //si numeros carton tiene el 5 y el 33 
-            if ((numeros_carton.includes (5))&&(numeros_carton.includes (33))&&mayoriaImpares(numeros_carton))
-            {
-                console.log ("Es de Luisa");
+            if ((numeros_carton.includes(5)) && (numeros_carton.includes(33)) && mayoriaImpares(numeros_carton)) {
+                console.log("Es de Luisa");
                 document.getElementById("resultadoLuisa").innerHTML = "ES DE LUISA";
             } else {
-                console.log ("NO Es de Luisa");
+                console.log("NO Es de Luisa");
                 document.getElementById("resultadoLuisa").innerHTML = "NO ES DE LUISA";
             }
             //y mayoría de Impares
-                //es de luisa
+            //es de luisa
             //si no
-                //No es de luisa
+            //No es de luisa
 
         }
 
@@ -69,78 +71,172 @@
         QUE NO ESTÁN EN EL CARTÓN
         **/
 
-        function obtenerNumerosQueNoEstan (numeros_que_estan)
-        {
+        function obtenerNumerosQueNoEstan(numeros_que_estan) {
             let numeros_que_no_estan = [];
             //voy del 1 al 90
             //y si no estan, me lo apunto 
-                for (let index = 1; index <= 90; index++) {
-                   if (numeros_que_estan.indexOf(index)==-1)
-                   {
-                       //index no está, inserto
-                       numeros_que_no_estan.push(index);
-                   }    
+            for (let index = 1; index <= 90; index++) {
+                if (numeros_que_estan.indexOf(index) == -1) {
+                    //index no está, inserto
+                    numeros_que_no_estan.push(index);
                 }
+            }
 
             return numeros_que_no_estan;
 
         }
 
-        function deMenorAMayor (a, b) {
+        function deMenorAMayor(a, b) {
             let numero_devuelto;
-                
-                numero_devuelto = a-b;
+
+            numero_devuelto = a - b;
 
             return numero_devuelto;
         }
-        function rellenarCarton()
-        {
-            //TODO rellenar los tds con números aleatorios [1,90]
-            //obtener los tds
-            let array_tds = document.getElementsByTagName("td");
-            let numero_aleatorio;
 
-            var index=0;
-            do{
+        function generarNumerosCarton() {
+            var lista_numeros = [];
+
+            var index = 0;
+            do {
                 numero_aleatorio = generarNumAleatorio();
                 //comprobar que numero_aleatorio NO esté en numeros_carton
-                if (numeros_carton.indexOf(numero_aleatorio)==-1)//no es repe
+                if (lista_numeros.indexOf(numero_aleatorio) == -1)//no es repe
                 {
-                    console.log ("numero VÁLIDO");
-                  //  array_tds[index].innerHTML = numero_aleatorio;
-                    numeros_carton.push(numero_aleatorio);
+                    console.log("numero VÁLIDO");
+                    //  array_tds[index].innerHTML = numero_aleatorio;
+                    lista_numeros.push(numero_aleatorio);
                     index++;
                 }
-            }while (numeros_carton.length<array_tds.length);
-            numeros_carton.sort(deMenorAMayor);
-            for (let index=0; index<array_tds.length;index++)
-            {
+            } while (lista_numeros.length < (MAX_COLUMNAS * MAX_FILAS));
+
+            return lista_numeros;
+        }
+
+        function ordenarNumerosCarton(numeros_carton) {
+            numeros_carton.sort(deMenorAMayor); //ORDEN TOTAL (O. NATURAL == ALFABÉTICAMENTE)
+        }
+
+        function dibujarNumerosCarton(numeros_carton) {
+            let array_tds = document.getElementsByTagName("td");
+
+            for (let index = 0; index < array_tds.length; index++) {
                 array_tds[index].innerHTML = numeros_carton[index];
             }
-            console.log ("Numeros cartón = " +numeros_carton);
-            comprobarCartonLuisa (numeros_carton);
-            var array_no_estan = obtenerNumerosQueNoEstan (numeros_carton);
-            console.log (array_no_estan);
-            console.log ("longi no están " + array_no_estan.length);
+            console.log("Numeros cartónnn = " + numeros_carton);
+        }
+
+
+        function rellenarCarton() {
+            //TODO rellenar los tds con números aleatorios [1,90]
+            //obtener los tds
+
+            let numero_aleatorio;
+            numeros_carton = generarNumerosCarton();
+
+            ordenarNumerosCarton(numeros_carton);
+            dibujarNumerosCarton(numeros_carton);
+            llenarSaca();
+
+
+            //comprobarCartonLuisa (numeros_carton);
+            //var array_no_estan = obtenerNumerosQueNoEstan (numeros_carton);
+            //console.log (array_no_estan);
+            //console.log ("longi no están " + array_no_estan.length);
 
         }
-        function dibujarCarton()
-        {
+        function crearCarton() {
             let tabla = document.getElementById("carton");
             let fila;
             let columna;
-            for (let nfilas=0; nfilas<MAX_FILAS; nfilas++)
-            {
+            for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
                 fila = document.createElement("tr");
-                for (let ncolumnas=0; ncolumnas<MAX_COLUMNAS; ncolumnas++)
-                {   
+                for (let ncolumnas = 0; ncolumnas < MAX_COLUMNAS; ncolumnas++) {
                     columna = document.createElement("td");
                     fila.appendChild(columna);
                 }
                 tabla.appendChild(fila);
             }
             rellenarCarton();
+
+
         }
+
+
+        /*
+        function bolas(){
+            let array_bolas = [];
+            for (let index = 0; index < array_bolas.length; index++) {
+                array_bolas.push(index);
+                console.log(array_bolas);
+                
+            }
+        }
+        */
+
+        function shuffle(a) {
+            var j, x, i;
+            for (i = a.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1));
+                x = a[i];
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
+        }
+
+        function llenarSaca() {
+            for (let nbola = 1; nbola <= 90; nbola++) {
+                saca.push(nbola);
+            }
+            shuffle(saca);
+            console.log("Saca desordenada: ")
+            console.log(saca);
+        }
+
+        function sacarBola(saca) {
+
+                let bola_sacada;
+                bola_sacada = saca[pos_saca];
+                document.getElementById("bola_sacada").innerHTML = saca[pos_saca];
+                pos_saca ++; //Apuntar a la siguiente bola
+                return bola_sacada;
+            }
+
+            function comprobarBola(bola, numeros_carton) {
+
+                if(numeros_carton.includes(bola)){
+                    //Está
+                    //marcar (funcion independiente). splice
+                    //Si bingo
+                        //Felicitar
+                    //Si no bingo
+                    //Jugar
+                    
+                } else{
+                    //No está;
+                    jugar();
+                }
+                
+            }
+
+        function jugar() {
+
+            //sacarBola
+            let bola_sacada = sacarBola(saca);
+            
+            //comprobarBola
+            
+        }
+
+
+
+        
+
+
+
+
+
     </script>
 </head>
 
@@ -152,6 +248,8 @@
         <!--<input id="idComprobar" onclick="esDeLuisa(numeros_carton)" type="button" value="COMPROBAR">-->
 
         <h2 id="acepto"></h2>
+        <h2 id="bola_sacada"></h2>
+        <input type="button" value="SACAR BOLA" onclick="jugar()">
 
 
     </div>
