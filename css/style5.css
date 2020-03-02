@@ -3,6 +3,10 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+img{
+    width: 100%;
+}
 h1{
     text-align: center;
 }
@@ -38,4 +42,22 @@ tr{
 td:nth-child(odd){
     background-color: red;
 }
+
+.hBola{
+    display: inline-block;
+    background-image: url(../images/bolaok.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    align-content: center;
+    padding: 46px 0px;
+    margin: 15px 0px;
+    font-size: 3em;
+    color: green;
+    
+}
+
+
 

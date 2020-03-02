@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        array_numeros = [];
+
+        window.onload = cargar;
+        function cargar() {
+
+            generarArray();
+            burbuja();
+            sumar();
+            mostrarImpares();
+
+
+        }
+
+
+        function generarNumAleatorio() {
+            let numero_aleatorio;
+            numero_aleatorio = Math.floor(Math.random() * (90)) + 1;
+            return numero_aleatorio;
+            console.log(numero_aleatorio);
+        }
+
+
+        function generarArray() {
+            for (let index = 1; index <= 10; index++) {
+                array_numeros.push(generarNumAleatorio());
+
+            }
+            console.log(array_numeros);
+        }
+
+
+       
+
+
+        function burbuja(a) {
+            var lista = array_numeros;
+            var n, i, k;
+            n = lista.length;
+            console.log("Lista desordenada: " +lista); 
+            // Mostramos, por consola, la lista desordenada
+            // Algoritmo de burbuja
+            for (k = 1; k < n; k++) {
+                for (i = 0; i < (n - k); i++) {
+                    //Ordenamos de mayor a menor
+                    if (lista[i] < lista[i + 1]) {
+                        a = lista[i];                       
+                        lista[i] = lista[i + 1];
+                        lista[i + 1] = a;
+                    }
+
+                }
+
+            }
+
+            console.log("Ordenados de mayor a menor: "+ lista); // Mostramos, por consola, la lista ya ordenada
+        }
+
+        //hacer una página que pida al usuario palabras hasta que introduzca la palabra "para"
+
+        function comprobarPalabra(palabra){
+            var acierto = "para";
+            var palabra = document.getElementById("inPalabra").value;
+
+            if(palabra == acierto){
+                document.getElementById("hRespuesta").innerHTML = "Enhorabuena, la respuesta es PARA";
+            } else{
+                document.getElementById("hRespuesta").innerHTML = "Vuelve a intentarlo";
+
+            }
+
+
+        }
+
+        function sumar(){
+            var numeros = array_numeros;
+            var resultado = 0;
+
+            for (let index = 0; index < numeros.length; index++) {
+                resultado+=numeros[index];
+
+                
+            }
+            console.log("Resultado= " + resultado); 
+
+        }
+
+        function mostrarImpares(){
+            let numeros = array_numeros;
+            let numeros_impares = [];
+            console.log("Todos los numeros: " + numeros);
+
+            for (let index = 0; index < numeros.length; index++) {
+                if(numeros[index] % 2 !=0){
+                    numeros_impares.push(numeros);
+                }               
+            }
+            console.log(numeros_impares.length);
+        }
+
+
+
+    </script>
+</head>
+
+<body style="background-image: url(images/bola.png)">
+
+    <label for="">Introduce una palabra</label>
+    <input type="text" name="" id="inPalabra">
+    <input type="button" value="COMPROBAR" onclick="comprobarPalabra()">
+    <h2 id="hRespuesta"></h2>
+
+
+</body>
+
+</html>
