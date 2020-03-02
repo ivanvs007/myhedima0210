@@ -14,7 +14,7 @@
         var numeros_carton = [];//array vacío de números
         window.onload = iniciarJuego;
         var saca = [];//todas las bolas
-        var pos_saca = 0;//la bola por la que voy
+        var pos_saca=0;//la bola por la que voy
 
         /****FUNCIONES AUXILIARES*****/
 
@@ -39,7 +39,7 @@
             return mas_impares;
         }
 
-        //función que informa por pantalla
+//función que informa por pantalla
         //si el cartón rx es del gusto de Luisa
         function comprobarCartonLuisa(numeros_carton) {
             //si numeros carton tiene el 5 y el 33 
@@ -158,7 +158,7 @@
 
             return numero_aleatorio;
         }
-
+              
         function generarNumerosCarton() {
             var lista_numeros = [];
             var index = 0;
@@ -182,7 +182,7 @@
                 array_tds[index].innerHTML = numeros_carton[index];
             }
         }
-
+      
 
         function shuffle(a) {
             var j, x, i;
@@ -194,111 +194,118 @@
             }
             return a;
         }
-
+        
         function llenarSaca() {
-            for (let nbola = 1; nbola <= 90; nbola++) {
-                saca.push(nbola);
+                for (let nbola = 1; nbola <= 90; nbola++) {
+                    saca.push(nbola);
+                }
+                console.log (saca);
+                shuffle(saca);
+                console.log ("Saca barajada");
+                console.log (saca);
             }
-            console.log(saca);
-            shuffle(saca);
-            console.log("Saca barajada");
-            console.log(saca);
-        }
 
-        function sacarBola(saca) {
-            let bola_sacada;
-            bola_sacada = saca[pos_saca];
-            document.getElementById("bola_sacada").innerHTML = bola_sacada;
-            pos_saca++;//para apuntar a la siguiente bola 
-            return bola_sacada;
-        }
-
-
-
-        function marcar(numero) {
-            //Recorrer la tabla (los tds) hasta encontrarlos.
-            //1 obtengo los td
-            let lista_tds = document.getElementsByTagName("td");
-            //2 Recorro hasta encontrar
+        function sacarBola (saca)
+            {
+                let bola_sacada;
+                bola_sacada = saca[pos_saca];
+                document.getElementById("bola_sacada").innerHTML =  bola_sacada;
+                pos_saca++;//para apuntar a la siguiente bola;
+                return bola_sacada;
+            }
+        function marcar (numero)
+        {
             let encontrado = false;
             let i = 0;
-
-            do {
-                if (lista_tds[i].innerHTML==numero) {
-                    console.log("encontrado")
+            let lista_tds = document.getElementsByTagName("td");
+            do{
+                if (lista_tds[i].innerHTML==numero)
+                {
                     encontrado = true;
-                    console.log("El td encontrado:" + lista_tds[i])
-                    lista_tds[i].innerHTML = "";  
-                } else{
-                    
-                    i++
+                    lista_tds[i].innerHTML='';
+                } else {
+                    i++;
                 }
-            } while (!encontrado);
+            }while((!encontrado))
         }
-
-
-        function comprobarBola(bola, numeros_carton) {
-            if (numeros_carton.includes(bola)) { // está
-                //marcar
-                marcar(bola);
-                let indice = numeros_carton.indexOf(bola);
-                numeros_carton.splice(indice,1);
-                console.log(numeros_carton.length);
-                //si bingo
-                //felicitar
-                if(numeros_carton.length == 0){
-                    console.log("BINGO");
-                } //si no bingo
-                //jugar               
-                else{
+        function comprobarBola(bola, numeros_carton)
+            {
+                if (numeros_carton.includes(bola))
+                { // está
+                //borro del cartón
+                marcar (bola);
+                //borro del array
+                var indice = numeros_carton.indexOf(bola); // obtenemos el indice
+                numeros_carton.splice(indice, 1);
+                if (numeros_carton.length==0)
+                {
+                    console.log("BINGGGOOO");
+                    alert("BINGOOOO");
+                } else {
+                    console.log("NO Bingo AÚN");
                     jugar();
                 }
-                    
-
-            } else {
-                //no está
-                jugar();
-            }
-        }
-        function jugar() {
-            //sacarbola
-            let bola_sacada = sacarBola(saca);
-            //comprobarBola
-            comprobarBola(bola_sacada, numeros_carton);
             
-        }
-
+                } else {
+                   //no está
+                   console.log ("NO está");
+                   jugar();
+                }
+            } 
+        function jugar ()
+            {
+                //sacarbola
+                let bola_sacada = sacarBola(saca);
+                comprobarBola (bola_sacada, numeros_carton);
+                //setTimeout(comprobarBola, 5000, bola_sacada, numeros_carton);
+            }
         function rellenarCarton() {
 
-            let numero_aleatorio;
-            numeros_carton = generarNumerosCarton();
-            console.log(" Mayor --> " + calcularMayor(numeros_carton));
-            console.log(" Menor --> " + calcularMenor(numeros_carton));
-            console.log(" Mayor2 --> " + calcularMayor2(numeros_carton));
-            console.log(" Menor2 --> " + calcularMenor2(numeros_carton));
-            ordenarNumerosCarton(numeros_carton);
-            dibujarNumerosCarton(numeros_carton);
-        }
-        function crearCarton() {
-            let tabla = document.getElementById("carton");
-            let fila;
-            let columna;
-            for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
-                fila = document.createElement("tr");
-                for (let ncolumnas = 0; ncolumnas < MAX_COLUMNAS; ncolumnas++) {
-                    columna = document.createElement("td");
-                    fila.appendChild(columna);
-                }
-                tabla.appendChild(fila);
+                let numero_aleatorio;
+                numeros_carton = generarNumerosCarton();
+                console.log(" Mayor --> " + calcularMayor(numeros_carton));
+                console.log(" Menor --> " + calcularMenor(numeros_carton));
+                console.log(" Mayor2 --> " + calcularMayor2(numeros_carton));
+                console.log(" Menor2 --> " + calcularMenor2(numeros_carton));
+                ordenarNumerosCarton(numeros_carton);
+                dibujarNumerosCarton(numeros_carton);    
             }
-
-        }
-        function iniciarJuego() {
+            function crearCarton() {
+                let tabla = document.getElementById("carton");
+                let fila;
+                let columna;
+                for (let nfilas = 0; nfilas < MAX_FILAS; nfilas++) {
+                    fila = document.createElement("tr");
+                    for (let ncolumnas = 0; ncolumnas < MAX_COLUMNAS; ncolumnas++) {
+                        columna = document.createElement("td");
+                        fila.appendChild(columna);
+                    }
+                    tabla.appendChild(fila);
+                }
+                
+            }
+        function iniciarJuego ()
+        {
             crearCarton();//dibujamos los tds vacíos
             rellenarCarton();//rellenamos los tds
             llenarSaca();//preparo el bombo/saca
-            //jugar();//empezamos a sacar bolas
+            jugar ();//empezamos a sacar bolas
+            contador();
         }
+
+        function contador() {
+            var jugadas= saca[pos_saca];
+
+            for (let index = 0; index < jugadas; index++) {
+                console.log("Nº Jugadas: " + jugadas);
+                
+            }
+            
+        }
+
+       
+
+
     </script>
 </head>
 
@@ -306,10 +313,11 @@
     <h1>BINGO LA GAVIA</h1>
     <div class="contenedor">
 
-        <table id="carton" class="tbTabla"></table>
-        <h2 id="acepto"></h2>
-        <h2  class="hBola" id="bola_sacada">75</h2><br>
-        <input type="button" value="SACAR BOLA" onclick="jugar()">
+        <table id="carton"></table>
+        <div class="hBola2"><img src="images/bingo.gif" alt=""></div>
+        <h2  class="hBola" id="bola_sacada"></h2><br>
+    <span id="resultadoLuisa"></span>
+        
 
 
     </div>

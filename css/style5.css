@@ -59,5 +59,17 @@ td:nth-child(odd){
     
 }
 
+.hBola2{
+    display: inline-block;
+  width: 150px;
+    height: 150px;
+    text-align: center;
+    align-content: center;
+    padding: 46px 0px;
+    margin: 15px 0px;
+    
+    
+}
+
 
 
