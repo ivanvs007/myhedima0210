@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style6.css">
+    <script>
+
+        const URL_SERVICIO = "http://192.168.3.61:8080/saludos/Saludos?idioma=";
+        const METODO = "GET";
+        var xhr = new XMLHttpRequest();
+        
+        
+
+        window.onload = iniciar; 
+        //this.onload = iniciar; Aquí this equivale a window;
+        function iniciar() {
+            let array_img = document.getElementsByTagName("img");
+            console.log("Longitud " + array_img.length);
+            for (let index = 0; index < array_img.length; index++) {
+                array_img[index].onclick = saludo;  
+                //array_img[index].onmouseover = alerta;     
+            }    
+        }
+
+        function alerta(){
+            //alert("Estás sobre la bandera de " + this.alt)
+        }
+        
+        function saludo() {
+            console.log("Ha hecho click en: ");
+            console.log("ID es: " + this.id);
+            let string_servicio = URL_SERVICIO + this.id;
+            console.log("La url del servisio es: " + string_servicio);
+            xhr.open(METODO, string_servicio, true);
+            xhr.onreadystatechange = consultaEstado;
+            xhr.send();
+           
+        }
+
+        function consultaEstado() {
+            console.log("consultaEstado =" + xhr.readyState);
+            if(xhr.readyState ==4){
+                console.log("La comunicacion ha terminado con un estatus: " + xhr.status);
+                if(xhr.status == 200){
+                    console.log("La comunicación ha terminado con éxito");
+                    document.getElementById("inSaludo").value = xhr.responseText;
+                    console.log("Cuerpo de la respuesta: " + xhr.responseText );
+                    console.log("TIPO MIME de la respuesta:  " + xhr.responseType );
+                    
+                }
+                
+            }
+
+            
+            
+        }
+
+        
+
+    </script>
+</head>
+
+<body>
+
+    <div class="contenedor">
+        <h1>SALUDOS</h1>
+        <div class="dvSaludo"><input type="text" name="" id="inSaludo"></div>
+        <div class="dvBotones">
+            <div id="" class="dvBandera"><img id="es" src="images/espania.png" alt="España"></div>
+            <div id="" class="dvBandera"><img id="it" src="images/italia.png" alt="Italia"></div>
+            <div id="" class="dvBandera"><img id="fr" src="images/francia.png" alt="Francia"></div>
+            <div id="" class="dvBandera"><img id="in" src="images/inglaterra.png" alt="Inglaterra"></div>
+        </div>
+        
+        
+    </div>
+
+</body>
+
+</html>

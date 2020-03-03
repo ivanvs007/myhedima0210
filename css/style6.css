@@ -1,0 +1,57 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(197, 199, 199) ;
+}
+
+img{
+    width: 100%;
+}
+
+h1{
+    font-size: 2em;
+    color: rgb(114, 2, 2);
+}
+
+
+.contenedor{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.dvBotones{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dvBandera{
+    width: 50%;
+    cursor: pointer;
+    padding: 10px;   
+}
+
+.dvSaludo{
+    height: 75px;
+    display: block;
+    padding: 20px;
+    
+}
+
+.dvBandera img{
+    border-radius: 10px;
+}
+
+.dvBandera img:hover{
+    box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
+}
+#inSaludo{
+    text-align: center;
+    font-size: 1.4em;
+    font-family: 'Courier New', Courier, monospace;
+}
