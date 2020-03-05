@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CALCULA LETRA DNI</title>
+    <meta charset="UTF-8">
+    <style>
+        .contenedor {
+            width: 50%;
+            margin: auto;
+            text-align: center;
+            background-color: rgb(209, 211, 210);
+            padding: 10px;
+        }
+    </style>
+    <script>
+
+        const URL_LETRA_DNI = "http://192.168.3.89:8080/saludos/LetraDni?numerodni=";
+        const METODO = "GET";
+
+        var xhr = new XMLHttpRequest();//"XMLHttpRequest()" es una clase; "var xhr" es el objeto;
+
+        
+
+        function carcularURL(numero) {
+            let url_completa = "";
+
+            let primera_letra = numero.charAt(0);
+            console.log("La primera letra es: " + primera_letra);
+            if ((primera_letra == 'X') || (primera_letra == 'Y') || (primera_letra == 'Z')) {
+
+                let numero_sin_letra = numero.substring(1);
+                console.log(numero_sin_letra);
+                console.log("DNI extranjero con letra");
+                url_completa = URL_LETRA_DNI + numero_sin_letra + "&prefijo" + primera_letra;
+                console.log(URL_LETRA_DNI + numero_sin_letra + "&prefijo " + primera_letra);
+
+            } else {
+                console.log("DNI nacional sin letra");
+                url_completa = URL_LETRA_DNI + numero;
+            }
+
+            return url_completa;
+
+        }
+
+        function calcular() {
+
+            if (validar(numero)) {
+                let numero = document.getElementById("txtDNI").value;
+                console.log("DNI válido");
+                //LLAMAR AL SERVIDOR, CON ESE NÚMERO
+                let url = calcularURL(numero);
+                console.log("URL = " + url);
+                xhr.open("GET", url);
+                xhr.onreadystatechange = recibirLetra;
+                xhr.send();
+            }
+            else {
+                alert("Dni incorrecto");
+            }
+
+
+        }
+
+
+        function respuesta() {
+            console.log("consultaLetra =" + xhr.readyState);
+            if (xhr.readyState == 4) {
+                console.log("La comunicacion ha terminado con un estatus: " + xhr.status);
+                if (xhr.status == 200) {
+                    console.log("La comunicación ha terminado con éxito");
+                    let letra_recibida = xhr.responseText;
+                    document.getElementById("txtLetra2").value = letra_recibida;
+                    console.log("La respuesta del profe es: " + letra_recibida);
+                    console.log("TIPO MIME de la respuesta:  " + xhr.responseType);
+
+                }
+            }
+        }
+
+        function validar(numero_dni) {
+            let validado = false;
+            //let numero_validado = document.getElementById("txtDNI").value;
+
+            if ((numero_dni.length <= 8)) {
+
+                if (!isNaN(numero_dni)) {
+
+                    validado = true;
+                    console.log(validado);
+                    console.log("validado");
+                } else {
+                    let letra = numero_dni.charAt(0);
+                    let subcadena = numero_dni.substring(1);
+                    valido = ((letra == "X") || (letra == "Y") || (letra == "Z") && (!isNaN(subcadena)));
+                    validado = true;
+                    console.log(validado);
+                    console.log("validado");
+                }
+            } /*else{
+                validado = false;
+            console.log(validado);
+            console.log("no validado");
+            }*/
+
+
+            return validado;
+
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <h2>CALCULADORA LETRA DNI</h2>
+        <label>Introduce tu DNI</label><br /><br>
+        <input type="text" id="txtDNI" /><br /><br>
+        <input onclick="calcular()" type="button" id="btnResultado" value="CALCULAR LETRA" /><br><br>
+        <label>LETRA PROFE</label><br /><br>
+        <input type="text" id="txtLetra2" /><br><br>
+        <input type="button" value="VALIDAR" onclick="validar()">
+
+    </div>
+</body>
+
+</html>

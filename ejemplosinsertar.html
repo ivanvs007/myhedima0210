@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <script>
+
+        let validado = false;
+        let numero_validado = document.getElementById("txtDNI").value;
+
+        if ((numero_dni.length <= 8)) {
+            if (!isNaN(numero_validado)) {
+
+                validado = true;
+                console.log(validado);
+                console.log("validado");
+            } else {
+                let letra = numero_dni.charAt(0);
+                let subcadena = numero_dni.substring(1);
+                valido = ((letra == "X") || (letra == "Y") || (letra == "Z") && (!isNaN(subcadena)));
+            }
+
+
+        } else {
+            validado = false;
+            console.log(validado);
+            console.log("no validado");
+        }
+
+        return validado;
+
+    </script>
+
+
+</head>
+
+<body>
+
+</body>
+
+</html>

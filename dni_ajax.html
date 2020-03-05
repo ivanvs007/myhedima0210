@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta charset="UTF-8">
+    <title>Ejercicios Básicos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- FONT–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <!-- CSS –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+
+    <script>
+        console.clear();
+
+        const DIR_SERVICIO = "http://192.168.3.89:8080/saludos/LetraDni?numerodni=";
+        // http:// = protocolo
+        // 192.168.3.89:8080 = servidor y puerto
+        // saludos = servicio
+        // LetraDni?numerodni= = parametro
+        const METODO = "GET";
+        var xhr = new XMLHttpRequest();
+        // xhr = clase (es un molde, una persona genérica)
+        // new XMLHttpRequest(); = objeto de esa clase (una particularidad de una persona para hacer algo en este caso) 
+
+
+        function calcula_dni() {
+            let dni = document.getElementById("numeroDni").value;
+            let resultadoDni = document.getElementById("resultadoDNI");
+            let dniEXtranjero = document.getElementById("dniEXtranjero");
+            let letraDniExtranjero = document.getElementById("letraDniExtranjero").value;
+            let dni_validado = false;
+
+            dni_validado = validar_dni();
+
+            if (dni_validado) {
+                if (dniEXtranjero.checked) {
+                    console.log("letraDniExtranjero " + letraDniExtranjero);
+                    xhr.open(METODO, DIR_SERVICIO + dni + "&prefijo=" + letraDniExtranjero);
+                    console.log("url del servicio " + DIR_SERVICIO + dni + "&" + letraDniExtranjero);
+                    xhr.onreadystatechange = consultaEstado;
+                    xhr.send();
+                } else {
+                    xhr.open(METODO, DIR_SERVICIO + dni);
+                    console.log("url del servicio " + DIR_SERVICIO + dni);
+                    xhr.onreadystatechange = consultaEstado;
+                    xhr.send();
+                }
+                dni_validado = false;
+            } else {
+                alert("No ha introducido un formato de dni correcto");
+            }
+
+
+            // Validación del DNI: Sólo números y máximo ocho + Si hay letra, que sea X, Y o Z
+            function validar_dni() {
+                if (dni.length <= 8 && !isNaN(dni)) {
+                    if (dniEXtranjero.checked) {
+                        validar_dni = true;
+                    }
+                } else if (isNaN(dni)) {
+                    validar_dni = false;
+                }
+
+                return validar_dni;
+            }
+
+        }
+
+        function consultaEstado() {
+            let dni = document.getElementById("numeroDni").value;
+            let resultadoDNI = document.getElementById("resultadoDNI");
+            let dniEXtranjero = document.getElementById("dniEXtranjero");
+            let letraDniExtranjero = document.getElementById("letraDniExtranjero").value;
+
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // responseText contiene la información de vuelta
+                console.log(xhr.readyState);
+                resultadoDNI.innerHTML = dni + xhr.responseText;
+            }
+        }
+
+        // Se muestran los campos de selección para DNI Extranjero
+        function mostrarLetraExtranjera() {
+            let dvExtranjero = document.getElementById("dvExtranjero");
+            let resultadoDni = document.getElementById("resultadoDNI");
+            resultadoDni.innerHTML = 'Pulse en "Enviar" para calcular su NIF';
+            resultadoDNI.style.color = "#0a79f0";
+
+            if (dniEXtranjero.checked) {
+                dvExtranjero.style.display = "block";
+            } else {
+                dvExtranjero.style.display = "none";
+            }
+        }
+
+        function asignarValorDniExtranjero(letraDniExtranjero) {
+            switch (letraDniExtranjero) {
+                case "X":
+                    letraDniExtranjero = 0;
+                    break;
+                case "Y":
+                    letraDniExtranjero = 1;
+                    break;
+                case "Z":
+                    letraDniExtranjero = 2;
+                    break;
+            }
+
+            return letraDniExtranjero;
+        }
+
+
+    </script>
+    <style>
+        #btEnviar {
+            margin-left: 0%;
+            width: 60%;
+        }
+
+        #dvElijaLetra {
+            display: flex;
+            align-items: center;
+            height: 60px;
+        }
+
+        #dvExtranjero {
+            display: none;
+        }
+
+        #dvElijaLetra p {
+            flex: 1;
+        }
+
+        #letraDniExtranjero {
+            margin-right: 2%;
+            width: 22%;
+        }
+
+        #resultadoDNI {
+            height: 38px;
+            padding: 6px 10px;
+            background-color:
+                #fff;
+            border: 1px solid #D1D1D1;
+            border-radius: 4px;
+            box-shadow: none;
+            box-sizing: border-box;
+            color: #0a79f0;
+            margin-left: 0px;
+            font-weight: 300;
+        }
+
+        .columns {
+            margin-left: 0%;
+        }
+
+        .value-description {
+            opacity: .8 !important;
+            font-weight: 300;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="ten columns">
+                <h1>Cálculo de la letra del DNI:</h1>
+                <form action="">
+                    <fieldset>
+                        <legend>Introduce el número del DNI:</legend>
+                        <!--<input type="text" maxlength="9" onfocus="this.value=''" value="Número dni" id="numeroDni">-->
+                        <input type="text" onfocus="this.value=''" value="Número dni" id="numeroDni">
+                        <label for="dniEXtranjero">DNI Extranjero
+                            <input type="checkbox" id="dniEXtranjero" onclick="mostrarLetraExtranjera()"><br>
+                            <div class="ten columns" id="dvExtranjero">
+                                <select class="six columns" id="letraDniExtranjero">
+                                    <option value="X">X</option>
+                                    <option value="Y">Y</option>
+                                    <option value="Z">Z</option>
+                                </select>
+                                <div id="dvElijaLetra" class="six columns">
+                                    <p>Elija la letra que le corresponda</p>
+                                </div>
+                            </div>
+                        </label>
+                        <div id="btEnviar" class="six columns">
+                            <input class="four columns button button-primary" type="button" value="Enviar"
+                                onclick="calcula_dni()">
+                        </div>
+                    </fieldset>
+                    <div>
+                        <p>Su NIF es:<br><span class="seven columns value-description" id="resultadoDNI">Pulse en
+                                "Enviar"
+                                para calcular su NIF</span></p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

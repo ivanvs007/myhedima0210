@@ -12,7 +12,8 @@
         //window.alert("Bienvenido");
         console.log("Estoy dentro");
 
-        
+        const URL_IMC = "http://192.168.3.82:8080/saludos/CalcularIMC";
+        var xhr = new XMLHttpRequest();
 
         const FOTO_DESNUTRIDO = "images/desnutrido.jpg";
         const FOTO_DELGADO = "images/delgado.jpg";
@@ -42,26 +43,26 @@
         //Función que devuelve el elemento img donde irá la foro del estado del IMC correspondiente.
         // Si no existe
         //Entradas, Salidas, Funcionalidad, Precondiciones y postcondiciones
-        function obtenerElementoImg(){
+        function obtenerElementoImg() {
             let elemento_img;
             let elemento_txt;
 
-               //OBTENER EL ELEMENTO PADRE Y VEMOS SI TIENE HIJOS
-               let padre = document.getElementById("hook_imagen");
-               if (padre.childElementCount==0) {
-                   console.log("No tengo hijos, lo creo");
-                   //Crearlo
-                   elemento_img = document.createElement("img");
-                   elemento_txt = document.createElement("h3");
-                   padre.appendChild(elemento_img);
-                   elemento_img.appendChild(elemento_txt);
-               }else{
-                   //Modificarlo
-                   console.log("ya tengo hijos, lo modifico");
-                   elemento_img = padre.firstChild;
-                   elemento_txt = elemento_img.firstChild;
-                   
-               }
+            //OBTENER EL ELEMENTO PADRE Y VEMOS SI TIENE HIJOS
+            let padre = document.getElementById("hook_imagen");
+            if (padre.childElementCount == 0) {
+                console.log("No tengo hijos, lo creo");
+                //Crearlo
+                elemento_img = document.createElement("img");
+                elemento_txt = document.createElement("h3");
+                padre.appendChild(elemento_img);
+                elemento_img.appendChild(elemento_txt);
+            } else {
+                //Modificarlo
+                console.log("ya tengo hijos, lo modifico");
+                elemento_img = padre.firstChild;
+                elemento_txt = elemento_img.firstChild;
+
+            }
 
 
             return elemento_img;
@@ -80,7 +81,7 @@
                 case "DESNUTRIDO":
                     //asignar atributo src a la imagen DESNUTRIDO
                     elto_img.src = FOTO_DESNUTRIDO;
-                    
+
                     break;
                 case "DELGADO":
                     //asignar atributo src a la imagen DELGADO
@@ -103,7 +104,7 @@
 
         }
 
-        function obtenerAltura(){
+        function obtenerAltura() {
             let altura = "0";
             altura = document.getElementById("inAltura").value;
             console.log("Altura: " + altura);
@@ -111,23 +112,23 @@
             return altura;
         }
 
-        function obtenerPeso(){
+        function obtenerPeso() {
             let peso = "0";
             peso = document.getElementById("inPeso").value;
             console.log("Peso: " + peso);
             return peso;
         }
 
-        function calcularIMCNumerico(altura, peso){
+        function calcularIMCNumerico(altura, peso) {
             let imc_calculado;
-                imc_calculado = peso/(altura * altura);
-                console.log("IMC calculado: " + imc_calculado)
+            imc_calculado = peso / (altura * altura);
+            console.log("IMC calculado: " + imc_calculado)
 
             return imc_calculado;
 
         }
 
-        function mostrarResultado(imc){
+        function mostrarResultado(imc) {
 
             //Mostrar el resultado numérico
             let resultado_imc = document.getElementById("spIMC");
@@ -143,17 +144,72 @@
             dibujarImagen(imc_nominal);
 
         }
-        
+
         function calcularIMC() {
 
             let altura = obtenerAltura();
             let peso = obtenerPeso();
-            let imc = calcularIMCNumerico(altura, peso);
-            mostrarResultado(imc);
-            
+            //let imc = calcularIMCNumerico(altura, peso);
+            //mostrarResultado(imc);
+            enviarDatos(altura, peso);
+
+
         }
-        
-        
+
+
+        function enviarDatos(altura, peso) {
+
+            var height = altura;
+            var weight = peso;
+
+            var imc = {
+                altura: height,
+                peso: weight
+            };
+
+
+            console.log("Altura intro = " + imc.altura);
+            console.log("Peso intro = " + imc.peso);
+
+            //var imc_json = JSON.stringify(imc_json);
+
+            //var imc_traducido = JSON.parse(imc_json);
+
+            xhr.onreadystatechange = consultaEstado;
+            xhr.open('POST', URL_IMC, true); //indicamos como vamos a enviar los datos, en este caso con el metodo GET al archivo meses.php?num= el valor que le indiquemos en el textbox
+            //xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            xhr.send(JSON.stringify(imc));
+
+        }
+
+        function consultaEstado() {
+
+
+            console.log("consultaEstado =" + xhr.readyState);
+            if (xhr.readyState == 4) {
+                console.log("La comunicacion ha terminado con un estatus: " + xhr.status);
+                if (xhr.status == 200) {
+                    let datos_devueltos = xhr.responseText;
+                    let datos_traducidos = JSON.parse(datos_devueltos);
+                    console.log("La comunicación ha terminado con éxito");
+                    console.log("Cuerpo de la respuesta: " + datos_devueltos);
+                    console.log("Cuerpo traducido: " + datos_traducidos);
+                    document.getElementById("spIMC").innerHTML = datos_traducidos.imc_numerico;
+                    document.getElementById("spGrupo").innerHTML = datos_traducidos.imc_nominal;
+                    document.getElementById("imgEstado").setAttribute("src", datos_traducidos.imc_img);
+
+                    console.log("TIPO MIME de la respuesta:  " + xhr.responseType);
+
+                }
+
+            }
+
+
+
+        }
+
+
         /*
         Función que calcula el valor nominal del IMC dado el valor numérico
         */
@@ -198,7 +254,9 @@
         <p class="dato">Usted se encuentra en el grupo: <span id="spGrupo"></span></p>
 
     </div>
-    <div id="hook_imagen"></div>
+    <div id="hook_imagen">
+        <img id="imgEstado" src="" alt="" srcset="">
+    </div>
 
 
 </body>
