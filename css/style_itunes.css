@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:200,300,300i,400,400i,700,700i&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:100&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img{
+    width: 100%;
+}
+
+audio {
+    width: 100%;
+    height: 30px;
+}
+
+.contenedor{
+    width: 70%;
+    margin: auto;
+    margin-top: 30px; 
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 300;
+    text-align: center; 
+    
+}
+
+.contenedor h1 {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 3em;
+}
+
+label, input{
+    font-size: 1.3em;
+    font-weight: 300;
+    max-height: 29px;
+    
+}
+
+input{
+    background-color: rgb(240, 234, 240);
+}
+.dvBusqueda{
+    margin: 30px 0px;
+}
+
+
+
+.fa-search{
+    background-color: white;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 1.5em !important; ;
+    color: rgb(94, 93, 91);
+    padding: 5px;
+    height: 29px;
+    
+}
+
+#dvreproductor{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;  
+}
+#dvCancion{
+    width: 25%;
+    padding: 10px;
+    
+}
+
+.col-5{
+    width: 19%;
+    padding: 10px;
+}
+
+.btnComprar{
+    font-size: 1em;
+    padding: 3px;
+    border: none;
+    border-radius: 5px;
+}
+h3{
+    font-weight: 300;
+    line-height: 1em;
+    margin-bottom: 5px;
+}
+.hNombre{
+    margin-top: 20px;
+    font-weight: 400;
+    color: gray;
+    font-size: 1.5em;
+}
+
+.imgAlbum{
+    box-shadow: 0px 0px 14px 2px rgba(55,55,55,0.4);
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+h4{
+    line-height: 1em;
+    color: #0072B3;
+}
+
+.hNombre2{
+    margin-top: 20px;
+    font-size: 4em;
+    font-weight: 400;
+    color: gray;
+    
+}
+.boton{
+    height: 29px;
+    font-size: 1em;
+    margin-left: 10px;
+    padding: 0px 5px;
+    background-color: darkslategray;
+    color: white;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}

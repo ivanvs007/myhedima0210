@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iTunes de palo</title>
+    <link rel="stylesheet" href="css/style_itunes.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        let xhr = new XMLHttpRequest();//ajax
+        const METODO = "GET";
+        const URL_ITUNES = "https://itunes.apple.com/search/?media=music&term=";
+
+        function recargar() {
+            window.location.reload(false);   
+        }
+        
+        function limpiar(canciones){
+            
+
+        }
+
+        
+        
+
+        function mostrarCancion(tema) {
+
+            let div_padre = document.getElementById("dvreproductor");
+
+            //Aquí creo el div con el id dvArtista y class col-4;
+            let div_hijo = document.createElement("div");
+            div_hijo.setAttribute("class", "col-5");
+            div_hijo.setAttribute("id", "dvArtista" + i);
+            div_padre.appendChild(div_hijo);
+
+
+            //Aquí inserto la imagen
+            let img = document.createElement("img");
+            img.setAttribute("class", "imgAlbum");
+            img.setAttribute("src", tema.artworkUrl100);
+            div_hijo.appendChild(img);
+
+            //Aquí pinto el audio
+            let audio = document.createElement("audio");
+            audio.setAttribute("controls", "controls");
+            audio.setAttribute("src", tema.previewUrl);
+            div_hijo.appendChild(audio);
+
+
+            //Aquí pinto el nombre del artista
+            let cancion = document.createElement("h3");
+            cancion.setAttribute("id", "nombreCancion_" + i);
+            cancion.innerHTML = innerHTML = tema.trackName;
+            div_hijo.appendChild(cancion);
+
+            //Aquí pinto el nombre del album
+            let album = document.createElement("h4");
+            album.setAttribute("id", "nombreAlbum_" + i);
+            album.innerHTML = innerHTML = tema.collectionName;
+            div_hijo.appendChild(album);
+
+
+        }
+
+
+
+        function buscarArtista() {
+            let artista_pedido = document.getElementById("inArtista").value;
+            console.log("Ha hecho click en: " + artista_pedido);
+            //Hacer la petición. Componer la url. Hecer el encodeURI;
+            let url = URL_ITUNES + artista_pedido;
+            let url_ok = encodeURI(url);
+            //console.log("El artista es: " + artista_pedido);
+            console.log("LA url con encode es: " + url_ok);
+            //Hago la petición.
+            xhr.open(METODO, url_ok, true);//El "true" se puede borrar
+            xhr.onreadystatechange = consultaEstado;
+            xhr.send();
+            
+                
+        }
+
+
+        function consultaEstado() {
+            console.log("consultaEstado =" + xhr.readyState);
+            if (xhr.readyState == 4) {
+                console.log("La comunicacion ha terminado con un estatus: " + xhr.status);
+                if (xhr.status == 200) {
+                    console.log("Respuesta ok");
+                    let respuesta = xhr.responseText;
+                    let respuestaok = JSON.parse(respuesta);
+
+
+                    if (respuestaok.results.length == 0) {
+                        console.log("No hay datos");
+
+                        //Creo el nombre del artista fuera del bucle
+                        let nombre_artista = document.createElement("h2");
+                        let div_principal = document.getElementById("dvSearch");
+                        nombre_artista.setAttribute("class", "hNombre2");
+                        nombre_artista.innerHTML = "No hay datos de su petición";
+                        div_principal.appendChild(nombre_artista);
+                        setTimeout(recargar, 3000);
+                    } else {
+
+                        console.log("La comunicación ha terminado con éxito");
+                        console.log("Respuesta: " + respuesta);
+                        //document.getElementById("respuesta").innerHTML= respuestaok;
+                        console.log("Respuesta traducida: " + respuestaok.resultCount);
+                        console.log("Respuesta traducida: " + respuestaok.results[0].trackName);
+                        console.log("Respuesta traducida: " + respuestaok.results[0].artistName);
+                        console.log("Longitud: " + respuestaok.results.length);
+                        console.log("TIPO MIME de la respuesta:  " + xhr.responseType);
+                        let array_datos = respuestaok.results;
+
+                        //Creo el nombre del artista fuera del bucle
+                        let nombre_artista = document.createElement("h2");
+                        let div_principal = document.getElementById("dvSearch");
+                        nombre_artista.setAttribute("class", "hNombre");
+                        nombre_artista.innerHTML = "Artista : " + array_datos[1].artistName;
+                        div_principal.appendChild(nombre_artista);
+
+                        for (i = 0; i < respuestaok.resultCount; i++) {
+                            console.log("Cancion: " + array_datos[i].trackName);
+                            //Cojo el elemento padre. HOOK o punto de anclaje
+                            mostrarCancion(array_datos[i]);
+                        }
+
+                    }
+
+                    
+
+                } else {
+                    console.log("Respuesta chunga" + xhr.responseText);
+                }
+
+            }
+
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div class="contenedor" id="container">
+        <h1>Buscador aiTunes</h1>
+        <div class="dvBusqueda" id="dvSearch">
+            <label for="">Buscar artista:</label>
+            <input type="text" name="" id="inArtista">     
+            <input class="boton" type="button" onclick="buscarArtista()" value="BUSCAR">
+            <input class="boton" type="button" onclick="recargar()" value="LIMPIAR">
+        </div>
+
+
+        <div id="dvreproductor">
+
+            
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+</body>
+
+</html>

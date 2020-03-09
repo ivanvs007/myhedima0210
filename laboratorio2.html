@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Document</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table td,
+        table th {
+            border: 1px solid rgb(221, 221, 221);
+            padding: 8px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: rgb(19, 153, 7);
+            color: white;
+        }
+
+        #tablaRoja th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: rgb(190, 6, 6);
+            color: white;
+        }
+
+        hr{
+            margin-top: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="row"></div>
+    <div class="col-sm-6">
+        <table id="tablaVerde" mensaje="Soy el color de la primavera" class="table">
+            <h3>Tabla Verde</h3>
+            <hr>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+            <tr class="registroVerde" empresa="Alfreds Futterkiste">
+                <td>Alfreds Futterkiste <input type="hidden" name="" value="Este es un campo de prueba para demostrar que no sale y se muestra cuando ahacemos click" id="hdDescription"></td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr class="registroVerde" empresa="Berglunds Snabbköp">
+                <td>Berglunds Snabbköp</td>
+                <td>Christina Berglund</td>
+                <td>Sweden</td>
+            </tr>
+            <tr class="registroVerde" empresa="Centro comercial Moctezuma">
+                <td>Centro comercial Moctezuma</td>
+                <td>Francisco Chang</td>
+                <td>Mexico</td>
+            </tr>
+            <tr class="registroVerde" empresa="Ernst Handel">
+                <td>Ernst Handel</td>
+                <td>Roland Mendel</td>
+                <td>Austria</td>
+            </tr>
+            <tr class="registroVerde" empresa="Island Trading">
+                <td>Island Trading</td>
+                <td>Helen Bennett</td>
+                <td>UK</td>
+            </tr>
+    
+    
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <table id="tablaRoja" mensaje="Soy el color de la furia" class="table">
+            <h3>Tabla Roja</h3>
+            <hr>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+    
+            <tr class="registroRojo" empresa="Königlich Essen">
+                <td>Königlich Essen</td>
+                <td>Philip Cramer</td>
+                <td>Germany</td>
+            </tr>
+            <tr class="registroRojo" empresa="Laughing Bacchus Winecellars">
+                <td>Laughing Bacchus Winecellars</td>
+                <td>Yoshi Tannamuri</td>
+                <td>Canada</td>
+            </tr>
+            <tr class="registroRojo" empresa="Magazzini Alimentari Riuniti">
+                <td>Magazzini Alimentari Riuniti</td>
+                <td>Giovanni Rovelli</td>
+                <td>Italy</td>
+            </tr>
+            <tr class="registroRojo" empresa="North/South">
+                <td>North/South</td>
+                <td>Simon Crowther</td>
+                <td>UK</td>
+            </tr>
+            <tr class="registroRojo" empresa="Paris Spécialités">
+                <td>Paris Spécialités</td>
+                <td>Marie Bertrand</td>
+                <td>France</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="detalle" style="width: 80%; height: 400px; overflow: scroll;"></div>
+
+    
+
+    
+
+</body>
+
+</html>
+
+<script>
+
+
+    $(document).ready(function () {
+        console.log('También estoy dentro');
+
+        
+        
+            //PRIMER LISTENER
+        $("#tablaVerde").click(function () {
+
+
+            var elementoClicado = $(this);
+
+            console.log(elementoClicado.attr('mensaje'));
+
+            //alert('Has clicado en el elemento: ' + elementoClicado.attr('mensaje'));
+            //alert('Has clicado en el elemento: ' + elementoClicado.id);
+
+        });
+
+
+        //segundo LISTENER
+        $("#tablaRoja").click(function () {
+
+
+            var elementoClicado = $(this);
+
+            console.log(elementoClicado.attr('mensaje'));
+
+            //alert('SOY EL LISTENER DE LA TABLA ROJA, has clicado en : ' + elementoClicado.attr('mensaje'));
+            //alert('Has clicado en el elemento: ' + elementoClicado.id);
+
+        });
+
+
+        //PRIMER LISTENER
+        $(".esregistroVerde").click(function () {
+
+
+            var elementoClicado = $(this);
+
+            console.log(elementoClicado.children()[1].innerText);
+            console.log(elementoClicado.children()[2].innerText);
+
+            //alert('Has clicado en el elemento: ' + elementoClicado.children()[0].innerText);
+            //alert('Has clicado en el elemento: ' + elementoClicado.id);
+
+        });
+        
+        
+        
+
+
+        //Este es el listener que gobierna la tabla azul es un listener de clase que afecta a los registros asociados a la "clase azul".
+        $(".registroVerde").click(function(){
+            console.log("Hola");
+            //updateDiv("blue", $(this));
+            //return;
+
+            //Quiero leer los nombres de las columnas y sé que están en el encabezado "var encabezado" de la tabla y sé que el encabezado es la primera fila de la tabla. Partiendo del registro clicado subo a la tabla ".parent()" y le pido que me lleve al primer elemento de tipo fila ".children('tr:first')", que es el encabezado que necesito.
+            var encabezado = $(this).parent().children('tr:first');
+            console.log('encabezado');
+
+            //Ahora quiero leer el atributo/propiedad "mensaje". Le pido que me lleve al elemento mas cercano ".closest('table')" que sea de tipo tabla y que lea su atributo ".attr('mensaje')").
+            var mensaje = $(this).closest('table').attr('mensaje');
+            console.log('mensaje');
+
+
+            //
+            var elementoClicado = $(this);
+            //Muestro como puedo acceder a un atributo personalizado que contiene el elemento fila que está en this cuyo nombre es "empresa"
+            console.log(elementoClicado.attr('empresa'));
+
+
+            //Llego a la parte importante. Quiero construir un mensaje con todos los elementos "values de la fila clicada"
+
+
+             //////////////////////
+            //GENERAMOS UN BUCLE//
+           //////////////////////
+
+           //El resultado del trabajo se guardará en una variable que se llama "detalla" que es un párrafo en formato html con retornos internos
+
+           var detalle;
+
+           detalle = "<p style='color:blue'>";
+
+           detalle += "Azul: " + mensaje + "<br/>";
+
+           //La fila actual está en la variable elementoClicado. Los encabezados está en la variable encabezado, Si construimos un bucle que cuente de cero a dos y se detendrá cuando i sea igual a tres.
+
+            for (i=0; i < elementoClicado.children().length; i++){
+                
+
+                detalle += encabezado.children()[i].innerText + ": " + elementoClicado.children()[i].innerText + "<br/>";
+                console.log(detalle) 
+            }
+
+            detalle += "</p>";
+            detalle += "<hr/>";
+
+            //Queremos que el nuevo párrafo se ponga arriba. Recurrimos a una ñapa. Al párrafo que hemos construido le ponemos a continuación todo lo que haya.
+
+            //detalle += $('#detalle') + html();
+            //detalle += $('#detalle') + html(detalle);
+
+            
+
+        }); //fin de función
+
+
+
+
+
+
+
+
+    });
+
+
+
+</script>
